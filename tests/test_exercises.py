@@ -4,7 +4,7 @@
 import unittest
 import mock
 import os
-from PLP.exercises import e1_flatten, e2_merge_objects, e3_sort_dictionaries
+from PLP.exercises import e1_flatten, e2_merge_objects, e3_sort_dictionaries, e4_swap
 
 
 class TestFlatten(unittest.TestCase):
@@ -135,6 +135,36 @@ class TestSortDictionaries(unittest.TestCase):
 
         os.remove(test_input_file)
         os.remove(test_output_file)
+
+
+class TestSwap(unittest.TestCase):
+    '''Test swap'''
+    def test_is_hashable(self):
+        '''Test _is_hashable function'''
+        given = [1, 'a', (1,), [1], ([1],1), {'a':1}]
+        expected = [True, True, True, False, False, False]
+
+        for value_given, value_expect in zip(given, expected):
+            self.assertEqual(e4_swap._is_hashable(value_given), value_expect)
+
+    @mock.patch('PLP.exercises.e4_swap._is_hashable')
+    def test_swap(self, mock_is_hashable):
+        '''Test swap function'''
+        mock_is_hashable.return_value = True
+
+        given = [{'a':1, 'b':2}, {'a':(1,)}, {'a':'abc'}, {}]
+        expected = [{1:'a', 2:'b'}, {(1,):'a'}, {'abc':'a'}, {}]
+
+        for value_given, value_expect in zip(given, expected):
+            self.assertEqual(e4_swap.swap(value_given), value_expect)
+
+    @mock.patch('PLP.exercises.e4_swap._is_hashable')
+    def test_swap_exception(self, mock_is_hashable):
+        '''Test swap function exception case'''
+        mock_is_hashable.return_value = False
+
+        with self.assertRaises(Exception):
+            e4_swap.swap({'a': [1]})
 
 
 if __name__ == '__main__':
