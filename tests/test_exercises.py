@@ -5,7 +5,7 @@ import unittest
 import mock
 import os
 from PLP.exercises import e1_flatten, e2_merge_objects, e3_sort_dictionaries, e4_swap
-from PLP.exercises import e5_card_dealer
+from PLP.exercises import e5_card_dealer, e6_execution_decorator
 
 
 class TestFlatten(unittest.TestCase):
@@ -242,6 +242,18 @@ class TestCardDealerDealer(unittest.TestCase):
         self.assertIsNone(test_player1._second_card)
         self.assertIsNone(test_player2._first_card)
         self.assertIsNone(test_player2._second_card)
+
+
+class TestExecutionDecorator(unittest.TestCase):
+    '''Test execution_decorator'''
+    def test_new_func(self):
+        def test_function():
+            pass
+        try:
+            e6_execution_decorator.execution_decorator()(test_function)()
+        except:
+            self.fail("e6_execution_decorator.execution_decorator raises unexpected exception!")
+
 
 
 if __name__ == '__main__':
