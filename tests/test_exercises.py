@@ -5,7 +5,7 @@ import unittest
 import mock
 import os
 from PLP.exercises import (e1_flatten, e2_merge_objects, e3_sort_dictionaries, e4_swap,
-    e5_card_dealer, e6_execution_decorator, e7_tree_iterator
+    e5_card_dealer, e6_execution_decorator, e7_tree_iterator, e8_subsets_generator
 )
 
 
@@ -269,6 +269,20 @@ class TestTreeIterator(unittest.TestCase):
             self.assertEqual(
                 [branch for branch in e7_tree_iterator.tree_iter(given_value)],
                 expected_value)
+
+class TestSubsetsGenarator(unittest.TestCase):
+    def test_subsets(self):
+        given = [set([1,2,3]),
+                 set(['a', 'b'])]
+        expected = [[set([]),set([1]),set([2]),set([3]),set([1,2]),set([1,3]),set([2,3]),set([1,2,3])],
+                    [set([]),set(['a']),set(['b']),set(['a','b'])]]
+
+        for given_value, expected_value in zip(given, expected):
+            result = []
+            for sub in e8_subsets_generator.subsets(given_value):
+                result.append(sub)
+            self.assertEqual(result, expected_value)
+
 
 if __name__ == '__main__':
     unittest.main()
