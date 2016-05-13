@@ -4,8 +4,9 @@
 import unittest
 import mock
 import os
-from PLP.exercises import e1_flatten, e2_merge_objects, e3_sort_dictionaries, e4_swap
-from PLP.exercises import e5_card_dealer, e6_execution_decorator
+from PLP.exercises import (e1_flatten, e2_merge_objects, e3_sort_dictionaries, e4_swap,
+    e5_card_dealer, e6_execution_decorator, e7_tree_iterator
+)
 
 
 class TestFlatten(unittest.TestCase):
@@ -255,6 +256,19 @@ class TestExecutionDecorator(unittest.TestCase):
             self.fail("e6_execution_decorator.execution_decorator raises unexpected exception!")
 
 
+class TestTreeIterator(unittest.TestCase):
+    def test_tree_iter(self):
+        given = [('a', None, ('b', None, (1, (2, None, None), None))),
+                 [1, [2, [3, [4, [5, 0, 0], 0], 0], 0], 0],
+                 ('b', ('a', None, None), ('z', ('c', None, None), ('zz', None, None)))]
+        expected = [['a', 'b', 1, 2],
+                    [1, 2, 3, 4, 5],
+                    ['b', 'a', 'z', 'c', 'zz']]
+
+        for given_value, expected_value in zip(given, expected):
+            self.assertEqual(
+                [branch for branch in e7_tree_iterator.tree_iter(given_value)],
+                expected_value)
 
 if __name__ == '__main__':
     unittest.main()
