@@ -5,7 +5,8 @@ import unittest
 import mock
 import os
 from PLP.exercises import (e1_flatten, e2_merge_objects, e3_sort_dictionaries, e4_swap,
-    e5_card_dealer, e6_execution_decorator, e7_tree_iterator, e8_subsets_generator
+    e5_card_dealer, e6_execution_decorator, e7_tree_iterator, e8_subsets_generator,
+    e9_singleton
 )
 
 
@@ -282,6 +283,21 @@ class TestSubsetsGenarator(unittest.TestCase):
             for sub in e8_subsets_generator.subsets(given_value):
                 result.append(sub)
             self.assertEqual(result, expected_value)
+
+
+class TestSingleton(unittest.TestCase):
+    def test_singleton(self):
+        class TestSingletonClass():
+            __metaclass__ = e9_singleton.Singleton
+
+            def __init__(self, dummy_attr):
+                self.dummy_attr = dummy_attr
+
+        tsc1 = TestSingletonClass(mock.sentinel.Dummy_attr_value)
+        tsc2 = TestSingletonClass(mock.sentinel.Dummy_attr_value2)
+
+        self.assertTrue(tsc1 is tsc2)
+        self.assertEqual(tsc2.dummy_attr, mock.sentinel.Dummy_attr_value)
 
 
 if __name__ == '__main__':
